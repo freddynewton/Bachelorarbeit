@@ -1,0 +1,22 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Scientific question}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Structure of the Thesis}{chapter.1}% 4
+\BOOKMARK [0][-]{chapter.2}{Related work}{}% 5
+\BOOKMARK [0][-]{chapter.3}{Theoretical background}{}% 6
+\BOOKMARK [1][-]{section.3.1}{Influence Map}{chapter.3}% 7
+\BOOKMARK [2][-]{subsection.3.1.1}{Simple Influence}{section.3.1}% 8
+\BOOKMARK [2][-]{subsection.3.1.2}{Calculating the Influence}{section.3.1}% 9
+\BOOKMARK [2][-]{subsection.3.1.3}{Dealing with Unknowns}{section.3.1}% 10
+\BOOKMARK [2][-]{subsection.3.1.4}{Influence Map Setup}{section.3.1}% 11
+\BOOKMARK [1][-]{section.3.2}{Blur algorithm}{chapter.3}% 12
+\BOOKMARK [1][-]{section.3.3}{Waypoints}{chapter.3}% 13
+\BOOKMARK [0][-]{chapter.4}{Experimental setup}{}% 14
+\BOOKMARK [1][-]{section.4.1}{Assumption}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.2}{Rules of the game}{chapter.4}% 16
+\BOOKMARK [2][-]{subsection.4.2.1}{Playing field construction}{section.4.2}% 17
+\BOOKMARK [2][-]{subsection.4.2.2}{Randomness factor}{section.4.2}% 18
+\BOOKMARK [0][-]{chapter.5}{Results}{}% 19
+\BOOKMARK [0][-]{chapter.6}{Discussion}{}% 20
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 21
+\BOOKMARK [0][-]{chapter.8}{Lists}{}% 22

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2328813551290241306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2328813551290241253}
+  - component: {fileID: 2328813551290241252}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2328813551290241253
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2328813551290241306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2328813551290241252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2328813551290241306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca27a4b25ef7edd41aa0a1dd2a8b18cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SharedText: {fileID: 0}
+  UnsharedText: {fileID: 0}
+  PointStateText: {fileID: 0}
+  UpdateFrequency: 5
+  PointsPerUpgrade: 1
+  RespawnTime: 5
+  gameSpeed: 1
+  AgentPrefabs:
+  - {fileID: 8482345219908653625, guid: 0ae3a127871f3184d9ba91b59994467c, type: 3}
+  - {fileID: 5289028211184958958, guid: e3a7b5a8575bdd940985e64ddc87798f, type: 3}
+  pointstates: 
+  pointAreas:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

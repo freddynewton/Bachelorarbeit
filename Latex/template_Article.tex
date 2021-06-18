@@ -1,0 +1,287 @@
+ \documentclass[]{report}
+
+%\usepackage{harvard}
+
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[authoryear,square]{natbib}
+\usepackage[svgnames]{xcolor}
+\usepackage[strings]{underscore}
+\usepackage[printonlyused]{acronym}
+\bibliographystyle{plainat}
+
+
+
+%opening
+\title{Tactical Game AI with Shared Knowledge based on Influence Maps}
+\author{Fred Newton, Akdogan}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+	\centering
+	
+	%------------------------------------------------
+	%	Top rules
+	%------------------------------------------------
+	
+	\rule{\textwidth}{1pt} % Thick horizontal rule
+	
+	\vspace{2pt}\vspace{-\baselineskip} % Whitespace between rules
+	
+	\rule{\textwidth}{0.4pt} % Thin horizontal rule
+	{\small \text{Bachelor thesis in the Computer Science and Media degree programme}}
+	\vspace{0.1\textheight} % Whitespace between the top rules and title
+	
+	%------------------------------------------------
+	%	Title
+	%------------------------------------------------
+	 
+	
+	\textcolor{black}{ % Red font color
+		{\Huge Tactical Game AI}\\[0.5\baselineskip] % Title line 1
+		{\Huge with shared Knowledge}\\[0.5\baselineskip] % Title line 2
+		{\Huge based on Influence Maps} % Title line 3
+	}
+	
+	\vspace{0.025\textheight}
+	
+	\rule{0.8\textwidth}{0.4pt}
+	
+	\vspace{0.1\textheight}
+	
+	%------------------------------------------------
+	%	Author
+	%------------------------------------------------
+	
+	\textcolor{black}{ % Red font color
+		{\small submitted by}\\[0.5\baselineskip] % Title line 1
+		{\Large \textsc{Fred Newton, Akdogan}}\\[0.5\baselineskip] % Title line 2
+	}
+	
+	\vspace{0.025\textheight} % Whitespace between the title and short horizontal rule
+	
+	{\small at the Stuttgart Media University on \today\\[0.5\baselineskip]}
+	{\small to obtain the academic degree of Bachelor of Science (B.Sc)\\[0.5\baselineskip]}
+	
+	\vfill % Whitespace between the author name and publisher
+	
+	%------------------------------------------------
+	%	Publisher
+	%------------------------------------------------
+	
+	%{\large\textcolor{Red}{\plogo}}\\[0.5\baselineskip] % Publisher logo
+	
+	{\small First examiner: Prof. Dr. Stefan Radicke\\[0.5\baselineskip]}
+	{\small Second examiner: Prof. Dr. Joachim Charzinski\\[0.5\baselineskip]}
+	
+	\vspace{0.1\textheight} % Whitespace under the publisher text
+	
+	%------------------------------------------------
+	%	Bottom rules
+	%------------------------------------------------
+	
+	\rule{\textwidth}{0.4pt} % Thin horizontal rule
+	
+	\vspace{2pt}\vspace{-\baselineskip} % Whitespace between rules
+	
+	\rule{\textwidth}{1pt} % Thick horizontal rule
+	
+\end{titlepage}
+
+
+\begin{abstract}
+	
+\end{abstract}
+\newpage
+\chapter*{Honorary Declaration}
+
+Hiermit versichere ich, Fred Newton Akdogan, ehrenwörtlich, dass ich die
+vorliegende Bachelorarbeit (bzw. Masterarbeit) mit dem Titel: "Tactical Game AI with Shared Knowledge based on Influence Maps" selbstständig und ohne fremde Hilfe verfasst und keine
+anderen als die angegebenen Hilfsmittel benutzt habe. Die Stellen der Arbeit, die dem
+Wortlaut oder dem Sinn nach anderen Werken entnommen wurden, sind in jedem Fall
+unter Angabe der Quelle kenntlich gemacht. Die Arbeit ist noch nicht veröffentlicht oder
+in anderer Form als Prüfungsleistung vorgelegt worden.
+Ich habe die Bedeutung der ehrenwörtlichen Versicherung und die prüfungsrechtlichen
+Folgen (§26 Abs. 2 Bachelor-SPO (6 Semester), § 24 Abs. 2 Bachelor-SPO (7 Semester), §
+23 Abs. 2 Master-SPO (3 Semester) bzw. § 19 Abs. 2 Master-SPO (4 Semester und
+berufsbegleitend) der HdM) einer unrichtigen oder unvollständigen ehrenwörtlichen
+Versicherung zur Kenntnis genommen.
+
+\vfill
+\noindent\begin{tabular}{ll}
+	\makebox[2.5in]{\hrulefill} & \makebox[2.5in]{\hrulefill}\\
+	Signature & Date\\[8ex]
+\end{tabular}
+\newpage
+
+\newpage
+\tableofcontents
+\newpage
+\chapter{Introduction}
+% TODO Write about about what it is this thesis
+
+\section{Motivation}
+I find it very interesting to give an \ac{AI} agent in the game as much knowledge as you can, but also not so much that it's like cheating. Because seeing how agents react to each other and can fight against each other has always interested me. That's why I wanted to write about \ac{IM} to give the agents an abstract picture of the map and even a kind of memory.
+
+\section{Scientific question}
+How much better are \ac{AI} agents with shared knowledge to agents without shared knowledge.
+\section{Structure of the Thesis}
+% TODO
+
+\chapter{Related work}
+In \citep{gameDevInfluenceMap} article discussed how \ac{IM} works in general. As well as the important part of giving an agent or squad a memory of the current influence range on the map. 
+
+\chapter{Theoretical background}
+\section{Influence Map}
+All information is taken from the book \ac{AI} for Games unless otherwise cited in this chapter \citep{AIforGamesTactical}.
+
+To enable the AI to make good decisions at a higher level, an \ac{IM} is created to represent the game world abstractly.
+
+\subsection{Simple Influence}
+The impact of a unit on the area it stands in varies depending on whether it is a simple foot soldier or an expensive tank or similar. If you take the strength of a unit, it decreases with increasing distance. So the further away you are from the unit, the less influence it has. A linear drop-off model can be used for this. Double the distance and you get half the impact:
+$$I_{d} = \frac{I_{0}}{1 + d}$$
+
+$I_{d}$ is the influence at a given distance. $d$ and $I_{0}$ are the influence at the distance of 0.
+
+\subsection{Calculating the Influence}
+For the \ac{IM}, a large calculation is needed for each unit on the map for each possible position. The execution time would be $O(nm)$ and the memory $O(m)$. $m$ would represent the number of possible positions in the game and $n$ the number of units. Using a linear drop-off formula for the influence of a unit and there being an influence threshold value, after the range of influence is set to zero, then the radius of influence is thus given:
+
+$$r = \frac{I_0}{I_t - 1}$$
+
+Where $I_t$ is the threshold value for the influence. Thus, the influence of each unit is only applied to the places that are within the given radius. This limits the calculation time to $O(nr)$ for the time and to $O(m)$ for the memory. $r$ is the number of locations that are within the average given radius.
+
+\subsection{Dealing with Unknowns}
+Hereby we give the unit only their influence to distribute in places they can see by their radius. Thus, an aspect called \ac{FOW} is built in. This is important for investigating whether the shared knowledge of units makes a difference. In this way, units also have a maximum distance they can see and can only build a personal \ac{IM} based on the friendly or enemy units they can see and incorporate this into their decisions. This can be seen as a problem, as the \ac{AI} cannot simply assert which unit can be in the \ac{FOW} as humans can. Furthermore, it becomes important here to see how much influence shared knowledge has among a team and thus the \ac{FOW} becomes smaller and the unit shares knowledge among itself instead of each unit interacting individually.
+
+\subsection{Influence Map Setup}
+All information in this section is quoted from the article \citep{gameDevInfluenceMap}. Otherwise they are cited as such.
+
+For the \ac{IM}, a 2-dimensional grid is stretched over the map and divided into a grid system. Then all areas that cannot be walked on, such as walls or similar, are excluded from the calculation or ignored. This promotes the unknown, because you cannot see through walls. After that, the cells that are the shortest distance to each agent are injected with their influence in the 2 dimensional grid. This means that these cells are always set to the influence value of the unit regardless of anything else. After setting the values of each agent in the IM, a blur algorithm is applied as explained in the chapter \ref{ssec:num1}. It is up to you which one to use. The important thing is to only apply this to cells that are accessible. This way the unknown is applied and the influence of an agent has to spread around obstacles and not just take the distance to them. The value from the blur algorithm is then multiplied by the decay to implement a decay of the influence on the range. 
+
+$$I_{xy} = b_{xy} * D$$
+
+$I_{xy}$ is the influence at the point $x$ and $y$ in the grid. This is equal to the blurred value $b_{xy}$ at the point $x$ and $y$ from the algorithm multiplied by the decay value $D$.
+
+
+\begin{description}
+	\item[$\bullet$ Momentum] % TODO
+	\item[$\bullet$ Decay] Decay is for the decay of the influence value within an \ac{IM} so a kind of fading memory is built up and the influence continues to decrease depending on how far it is from its point of origin.
+	\item[$\bullet$ Update Frequency] This parameter describes how often the influence is updated. 
+	\end {description}
+
+\section{Blur algorithm} \label{ssec:num1}
+For the calculation of the influence in maps with small corridors and narrow spaces \cite{gameDevInfluenceMap} a blur algorithm can be used as well as flooding functions. In this work, a boxblur algorithm was applied. But it would work just as well with a Gaussian blur. This is open to the individual preferences of how the influence should spread.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
+		\hline
+		0.000 & \textbf{1.000} & 0.000 & 0.000 & 0.000\\
+		\hline
+		0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
+		\hline
+		0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
+		\hline
+		0.000 & 0.000 & \textbf{-1.000} & 0.000 & 0.000\\
+		\hline
+		
+	\end{tabular}
+	\caption{Boxblur influence example grid - Iteration 0}
+	\label{tab:Boxblur grid Iteration 0}
+\end{table}
+
+The Box Blur is a spatial domain linear filter. This takes a pixel (or in our case a cell) from the grid and takes itself and its surrounding pixels and calculates the average as the new value. A 3 by 3 box blur (radius 1) can also be described here as a matrix:
+
+\[K = \frac{1}{9}\begin{bmatrix} 1 & 1 & 1\\ 1 & 1 & 1\\ 1 & 1 & 1 \end{bmatrix}\]
+
+$K$ is the average value of pixel and its surrounding values.\citep{boxblur}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		0.250 & 0.200 & 0.200 & 0.030 & 0.008\\
+		\hline
+		0.240 & \textbf{1.000} & 0.160 & 0.006 & 0.007\\
+		\hline
+		0.210 & 0.180 & 0.150 & 0.040 & 0.002\\
+		\hline
+		0.060 & -0.040 & -0.070 & -0.100 & -0.010\\
+		\hline
+		0.005 & -0.170 & \textbf{-1.000} & -0.200 & -0.078\\
+		\hline
+		
+	\end{tabular}
+	\caption{Boxblur influence example grid - Iteration 1}
+	\label{tab:Boxblur grid Iteration 1}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		0.420 & 0.370 & 0.290 & 0.080 & 0.025\\
+		\hline
+		0.400 & \textbf{1.000} & 0.250 & 0.009 & 0.027\\
+		\hline
+		0.300 & 0.250 & 0.140 & 0.030 & -0.007\\
+		\hline
+		0.068 & -0.057 & -0.130 & -0.15 & -0.069\\
+		\hline
+		-0.039 & -0.221 & \textbf{-1.000} & -0.271 & -0.142\\
+		\hline
+		
+	\end{tabular}
+	\caption{Boxblur influence example grid - Iteration 2}
+	\label{tab:Boxblur grid Iteration 2}
+\end{table}
+
+Through this box blur, the influence is gradually expanded with 1,000 and -1,000 and then stagnates after a certain iteration. The Celle with 1.000 means that there is an allied unit that places its influence there and -1.000 means that there is an enemy unit.
+
+\section{Waypoints}
+Waypoints are positions distributed around the game world. With waypoints, the \ac{AI} can use this for its pathfinder in order to progress in the game world. Tactical waypoints require more data describing these points in order to make a correct decision about which waypoint to use \citep{AIforGamesTactical}.
+
+\chapter{Experimental setup}
+The experiment is a match against two sides in the style of "conquest" as in games of Battlefield. In Conquest, there are a certain number of places that a side tries to capture. At the beginning, each place is still uncaptured. When a team has taken a point, it always gets points added to their points account at certain time intervals. The team that has reached a certain number of points first after a certain time has won. 
+One side will consist of a squad of five agents, the other side of five squads of one agent each. A squad always knows where its agents are and whether a unit sees a friendly or enemy agent and can thus build up an \ac{IM}.
+Each time a team wins, this is saved in a file and the next match starts from the beginning. This allows you to run this several thousand times so that the result is not falsified.
+
+\section{Assumption}
+I think the side with the squad and its five agents has a slightly higher win rate than the side with the 5 squads with one agent each. This is because it has more information to decide, for example, which of the points to attack first or which point may have no enemy units. 
+
+\section{Rules of the game}
+The goal of one side is to reach 100 points to win the game. This means that there will always be 3 points distributed on the map, each of which can be captured. A point is captured when an agent is in a certain area without any other enemy agents. Each point adds one point to the score every 5 seconds. Each agent has the option to shoot and kill an enemy agent. Each agent has 100 lives and can shoot a projectile with 10 damage every 3 seconds. If the projectile hits a wall or another enemy agent it is destroyed. If an agent has 0 life it is destroyed and after 10 seconds it is re-instantiated at a random location on the map but not in a capturable point and thus rejoins the game.
+
+\subsection{Playing field construction}
+\subsection{Randomness factor}
+
+\chapter{Results}
+\chapter{Discussion}
+
+\chapter{Conclusion}
+
+
+\newpage
+\chapter{Lists}
+\section*{List of Acronyms}
+\begin{acronym}[FOW]
+	\acro{IM}{influence map}
+	\acro{FOW}{fog-of-war}
+	\acro{AI}{artificial intelligence}
+	\end{acronym}
+
+\listoffigures
+\listoftables
+
+
+\bibliography{references}
+\end{document}
