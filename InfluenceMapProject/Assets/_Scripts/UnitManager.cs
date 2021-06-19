@@ -32,6 +32,16 @@ public class UnitManager : MonoBehaviour
         {
             GameController.Instance.StartRespawn(squadInfluenceManager);
             
+            if (squadInfluenceManager.style == SquadInfluenceManager.InfluenceStyle.SHARED)
+            {
+                IterationManager.Instance.currentMatchData.SharedMatchDeath.DeathPositions.Add(transform.position);
+                IterationManager.Instance.currentMatchData.UnsharedMatchDeath.KillPositions.Add(transform.position);
+            } else
+            {
+                IterationManager.Instance.currentMatchData.UnsharedMatchDeath.DeathPositions.Add(transform.position);
+                IterationManager.Instance.currentMatchData.SharedMatchDeath.KillPositions.Add(transform.position);
+            }
+            
             Destroy(gameObject);
         }
 

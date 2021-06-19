@@ -28,8 +28,11 @@ public class GameController : Singleton<GameController>
     public int PointsPerUpgrade = 1;
     public float RespawnTime = 10f;
     [Range(0, 20)] public float gameSpeed = 1;
+    [HideInInspector] public float MatchDuration;
 
     public GameObject[] AgentPrefabs;
+
+
 
     [Header("Points")]
     public POINTSTATE[] pointstates;
@@ -46,6 +49,7 @@ public class GameController : Singleton<GameController>
         UnsharedText.text = "Unshared: " + UnsharedPoints.ToString();
 
         pointstates = new POINTSTATE[3] { POINTSTATE.NONE, POINTSTATE.NONE, POINTSTATE.NONE };
+        IterationManager.Instance.currentMatchData.PointStatesVerlauf.Add(new IterationManager.PointStateStatus(pointstates));
 
         StartCoroutine(PointUpdate());
 
@@ -55,6 +59,11 @@ public class GameController : Singleton<GameController>
     private void LateUpdate()
     {
         if (!gameIsOver) Time.timeScale = gameSpeed;
+    }
+
+    private void Update()
+    {
+        MatchDuration += Time.deltaTime;
     }
 
     private void StartGame()
@@ -126,6 +135,8 @@ public class GameController : Singleton<GameController>
         {
             Time.timeScale = 0;
             gameIsOver = true;
+
+            IterationManager.Instance.RestartMatch();
         }
 
         // DRAW INTO JSON
@@ -144,6 +155,8 @@ public class GameController : Singleton<GameController>
             if (p == POINTSTATE.SHARED) SharedPoints += PointsPerUpgrade;
             else if (p == POINTSTATE.UNSHARED) UnsharedPoints += PointsPerUpgrade;
         }
+
+        IterationManager.Instance.currentMatchData.PointVerlauf.Add(new IterationManager.PointGradient(SharedPoints, UnsharedPoints));
 
         SharedText.text = "Shared: " + SharedPoints.ToString();
         UnsharedText.text = "Unshared: " + UnsharedPoints.ToString();
