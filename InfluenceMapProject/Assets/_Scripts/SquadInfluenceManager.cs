@@ -20,7 +20,7 @@ public class SquadInfluenceManager : MonoBehaviour
     public InfluenceStyle style;
     //public SquadTeam team;
     public Imap map;
-    public LayerMask ignoreMask;
+    public LayerMask ignoreTargetLayerMask;
 
     [Header("State Library")]
     public State currentState;
@@ -66,7 +66,7 @@ public class SquadInfluenceManager : MonoBehaviour
 
     public void callBackAction(UnitManager callingAgent)
     {
-        if (currentState.Actions.Length > 0)
+        if (currentState.Actions.Length > 0 && Time.timeScale != 0)
         {
             foreach (Action act in currentState.Actions)
             {
@@ -170,6 +170,15 @@ public class SquadInfluenceManager : MonoBehaviour
                 foreach (Transform _t in sim.gameObject.transform)
                 {
                     // Raycast Line of Sight
+                    // Create Raycast
+                    RaycastHit2D hit = Physics2D.Raycast(t.position, _t.position - t.position, 1000f, ignoreTargetLayerMask);
+
+                    if (hit.collider != null && hit.collider.gameObject.layer == sim.gameObject.transform.GetChild(0).gameObject.layer)
+                    {
+                        enemyTransforms.Add(_t);
+                    }
+
+                    /*
                     RaycastHit2D[] hits = new RaycastHit2D[2];
                     Physics2D.RaycastNonAlloc(t.position, _t.position - t.position, hits);
 
@@ -177,6 +186,7 @@ public class SquadInfluenceManager : MonoBehaviour
                     {
                         enemyTransforms.Add(_t);
                     }
+                    */
                 }
 
                 if (enemyTransforms.Count > 0)

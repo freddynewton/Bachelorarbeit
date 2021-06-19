@@ -110,7 +110,7 @@ public class GameController : Singleton<GameController>
                     Vector2 Pos = squad.map.getWorldPositionFromCell(x, y);
 
                     Instantiate(squad.style == SquadInfluenceManager.InfluenceStyle.SHARED ? AgentPrefabs[0] : AgentPrefabs[1], Pos, Quaternion.identity, squad.transform);
-                    Debug.Log("Spawning " + (squad.style == SquadInfluenceManager.InfluenceStyle.SHARED ? AgentPrefabs[0].name : AgentPrefabs[1].name) + " on " + Pos.ToString() + " Position");
+                    // Debug.Log("Spawning " + (squad.style == SquadInfluenceManager.InfluenceStyle.SHARED ? AgentPrefabs[0].name : AgentPrefabs[1].name) + " on " + Pos.ToString() + " Position");
                     foundPos = true;
                 }
             }
