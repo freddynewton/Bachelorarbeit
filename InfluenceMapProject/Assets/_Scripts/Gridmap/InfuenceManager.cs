@@ -62,12 +62,20 @@ public class InfuenceManager : Singleton<InfuenceManager>
             // Set Enemy and Ally Inf
             if (map.allyPosition != null)
             {
-                foreach (Transform t in map.allyPosition) map.setWorldPositionToCell(t.position.x, t.position.y, 1f);
+                foreach (Transform t in map.allyPosition)
+                {
+                    if (t != null)
+                        map.setWorldPositionToCell(t.position.x, t.position.y, 1f);
+                }
             }
 
             if (map.enemyPosition != null)
             {
-                foreach (Transform t in map.enemyPosition) map.setWorldPositionToCell(t.position.x, t.position.y, -1f);
+                foreach (Transform t in map.enemyPosition)
+                {
+                    if (t != null)
+                        map.setWorldPositionToCell(t.position.x, t.position.y, -1f);
+                }
             }
 
             float[] avgInfPoint = new float[3] { 0, 0, 0 };
