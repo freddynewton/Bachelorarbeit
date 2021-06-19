@@ -1,16 +1,24 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem{gameDevInfluenceMap}
+\bibitem[Champandard(2021)]{gameDevInfluenceMap}
 Alex~J. Champandard.
 \newblock The core mechanics of influence mapping, April 2021.
+\newblock URL
+  \url{https://www.gamedev.net/tutorials/programming/artificial-intelligence/the-core-mechanics-of-influence-mapping-r2799/}.
 
-\bibitem{boxblur}
+\bibitem[Handwiki(2021)]{boxblur}
 Handwiki.
-\newblock Box blur, December 21.
+\newblock Box blur, December 2021.
+\newblock URL \url{https://handwiki.org/wiki/Box_blur}.
 
-\bibitem{AIforGamesTactical}
+\bibitem[Mellington(2020)]{AIforGamesTactical}
 Ian Mellington.
-\newblock {\em AI for Games}.
+\newblock \emph{AI for Games}.
 \newblock Third edition edition, December 2020.
 
 \end{thebibliography}
