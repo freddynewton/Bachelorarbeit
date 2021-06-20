@@ -7,8 +7,10 @@ using System;
 using System.Threading.Tasks;
 
 
-public class GameController : Singleton<GameController>
+public class GameController : MonoBehaviour
 {
+    public static GameController Instance { private set; get; }
+
     public enum POINTSTATE
     {
         SHARED,
@@ -30,9 +32,10 @@ public class GameController : Singleton<GameController>
     [Range(0, 20)] public float gameSpeed = 1;
     [HideInInspector] public float MatchDuration;
 
+
+    [Header("Objects")]
     public GameObject[] AgentPrefabs;
-
-
+    public SquadInfluenceManager[] squads;
 
     [Header("Points")]
     public POINTSTATE[] pointstates;
@@ -42,6 +45,16 @@ public class GameController : Singleton<GameController>
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            // DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         SharedPoints = 0;
         UnsharedPoints = 0;
 
@@ -71,10 +84,8 @@ public class GameController : Singleton<GameController>
         float tmpRespawnTimer = RespawnTime;
         RespawnTime = 0;
 
-        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Squad"))
+        foreach(SquadInfluenceManager squad in squads)
         {
-            SquadInfluenceManager squad = obj.GetComponent<SquadInfluenceManager>();
-
             if (squad.style == SquadInfluenceManager.InfluenceStyle.SHARED)
             {
                 for (int i = 0; i < 5; i++)
@@ -114,7 +125,7 @@ public class GameController : Singleton<GameController>
                 RaycastHit2D hit = Physics2D.BoxCast(squad.map.getWorldPositionFromCell(x, y), Vector2.one, 0, Vector2.zero);
 
                 // Check if Respawn Position is in Capturepoint
-                if (!InfuenceManager.Instance.CheckIfCellIsInCapturePoint(x, y) && hit.collider == null)
+                if (!InfluencerManager.Instance.CheckIfCellIsInCapturePoint(x, y) && hit.collider == null)
                 {
                     Vector2 Pos = squad.map.getWorldPositionFromCell(x, y);
 

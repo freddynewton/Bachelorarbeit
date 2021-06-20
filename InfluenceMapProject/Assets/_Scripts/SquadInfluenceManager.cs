@@ -213,8 +213,8 @@ public class SquadInfluenceManager : MonoBehaviour
 
     private void Awake()
     {
-        map = new Imap(InfuenceManager.Instance.CellSize, InfuenceManager.Instance.mapSize, InfuenceManager.Instance.offset);
-        InfuenceManager.Instance.imaps.Add(map);
+        map = new Imap(InfluencerManager.Instance.CellSize, InfluencerManager.Instance.mapSize, InfluencerManager.Instance.offset);
+        InfluencerManager.Instance.imaps.Add(map);
 
         squadUnits = GetComponentsInChildren<UnitManager>().ToList();
     }
@@ -223,6 +223,6 @@ public class SquadInfluenceManager : MonoBehaviour
     {
         if (map == null) return;
 
-        InfuenceManager.Instance.GizmoVisualisation(map);
+        InfluencerManager.Instance.GizmoVisualisation(map);
     }
 }

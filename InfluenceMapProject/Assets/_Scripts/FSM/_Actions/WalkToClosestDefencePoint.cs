@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WalkToClosestDefencePoint", menuName = "Actions/WalkToClosestDefencePoint")]
 public class WalkToClosestDefencePoint : Action
 {
-    private List<InfuenceManager.CapturePoint> capList = new List<InfuenceManager.CapturePoint>();
+    private List<InfluencerManager.CapturePoint> capList = new List<InfluencerManager.CapturePoint>();
 
     public override void action(UnitManager agent)
     {
@@ -20,7 +20,7 @@ public class WalkToClosestDefencePoint : Action
             if ((agent.squadInfluenceManager.style == SquadInfluenceManager.InfluenceStyle.SHARED && GameController.Instance.pointstates[i] == GameController.POINTSTATE.SHARED) ||
                     (agent.squadInfluenceManager.style == SquadInfluenceManager.InfluenceStyle.UNSHARED && GameController.Instance.pointstates[i] == GameController.POINTSTATE.UNSHARED))
             {
-                capList.Add(InfuenceManager.Instance.capturePoints[i]);
+                capList.Add(InfluencerManager.Instance.capturePoints[i]);
             }
         }
 

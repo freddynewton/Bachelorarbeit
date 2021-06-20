@@ -6,7 +6,7 @@ using System;
 [CreateAssetMenu(fileName = "WalkToClosestCapturePoint", menuName = "Actions/WalkToClosestCapturePoint")]
 public class WalkToClosestCapturePoint : Action
 {
-    private List<InfuenceManager.CapturePoint> capList = new List<InfuenceManager.CapturePoint>();
+    private List<InfluencerManager.CapturePoint> capList = new List<InfluencerManager.CapturePoint>();
 
     public override void action(UnitManager agent)
     {
@@ -17,12 +17,12 @@ public class WalkToClosestCapturePoint : Action
         {
             if (GameController.Instance.pointstates[i] == GameController.POINTSTATE.NONE)
             {
-                capList.Add(InfuenceManager.Instance.capturePoints[i]);
+                capList.Add(InfluencerManager.Instance.capturePoints[i]);
             }
             else if ((agent.squadInfluenceManager.style == SquadInfluenceManager.InfluenceStyle.SHARED && GameController.Instance.pointstates[i] == GameController.POINTSTATE.UNSHARED) ||
                     (agent.squadInfluenceManager.style == SquadInfluenceManager.InfluenceStyle.UNSHARED && GameController.Instance.pointstates[i] == GameController.POINTSTATE.SHARED))
             {
-                capList.Add(InfuenceManager.Instance.capturePoints[i]);
+                capList.Add(InfluencerManager.Instance.capturePoints[i]);
             }
         }
 
